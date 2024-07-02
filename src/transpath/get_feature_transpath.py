@@ -1,17 +1,25 @@
-import pandas as pd
+from torch.autograd import Variable
 import torch, torchvision
 import torch.nn as nn
 from torchvision import transforms
+import torchvision.models as models
 from PIL import Image
+import numpy as np
+import pandas as pd
+import os
+import argparse
+from tqdm import tqdm
+import json
+from torchvision.models import resnet50
+from transpath.byol_pytorch.byol_pytorch_get_feature import BYOL
+
 from torch.utils.data import Dataset
-from ctran import ctranspath
-
-
+import os
 mean = (0.485, 0.456, 0.406)
 std = (0.229, 0.224, 0.225)
 trnsfrms_val = transforms.Compose(
     [
-        transforms.Resize(224),
+        transforms.Resize(256),
         transforms.ToTensor(),
         transforms.Normalize(mean = mean, std = std)
     ]
@@ -34,22 +42,23 @@ class roi_dataset(Dataset):
 
 
         return image
+model = BYOL(
+    image_size=256,
+    hidden_layer='to_latent'
+)
 
 img_csv=pd.read_csv(r'./test_list.csv')
 test_datat=roi_dataset(img_csv)
 database_loader = torch.utils.data.DataLoader(test_datat, batch_size=1, shuffle=False)
 
-model = ctranspath()
-model.head = nn.Identity()
-td = torch.load(r'./ctranspath.pth')
-model.load_state_dict(td['model'], strict=True)
+pretext_model = torch.load(r'./checkpoint.pth')
+model = nn.DataParallel(model).cuda()
+model.load_state_dict(pretext_model, strict=True)
 
+model.module.online_encoder.net.head = nn.Identity()
 
 model.eval()
 with torch.no_grad():
     for batch in database_loader:
-        features = model(batch)
-        features = features.cpu().numpy()
+        _, embedding = model(batch.cuda(),return_embedding = True)
 
-
-#

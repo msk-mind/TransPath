@@ -9,7 +9,7 @@ import numpy as np
 
 from torchvision import transforms as T
 from torchvision import models
-from net.models.modeling import VisionTransformer, CONFIGS
+from transpath.net.models.modeling import VisionTransformer, CONFIGS
 # helper functions
 
 def default(val, def_val):

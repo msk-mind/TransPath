@@ -7,11 +7,11 @@ from PIL import Image
 from torch.utils.data import Dataset
 import argparse
 from functools import partial
-import moco.builder_infence
-import moco.loader
-import moco.optimizer
+import transpath.moco.builder_infence
+import transpath.moco.loader
+import transpath.moco.optimizer
 import torchvision.models as torchvision_models
-import vits
+import transpath.vits
 torchvision_model_names = sorted(name for name in torchvision_models.__dict__
                                  if name.islower() and not name.startswith("__")
                                  and callable(torchvision_models.__dict__[name]))
@@ -56,7 +56,7 @@ test_datat=roi_dataset(img_csv)
 database_loader = torch.utils.data.DataLoader(test_datat, batch_size=1, shuffle=False)
 
 if args.arch.startswith('vit'):
-    model = moco.builder_infence.MoCo_ViT(
+    model = transpath.moco.builder_infence.MoCo_ViT(
         partial(vits.__dict__[args.arch], stop_grad_conv1=True))
 
     pretext_model = torch.load(r'./vit_small.pth.tar')['state_dict']

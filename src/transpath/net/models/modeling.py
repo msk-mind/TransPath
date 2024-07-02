@@ -17,10 +17,10 @@ from torch.nn import CrossEntropyLoss, Dropout, Softmax, Linear, Conv2d, LayerNo
 from torch.nn.modules.utils import _pair
 from scipy import ndimage
 
-import net.models.configs as configs
-from .modeling_resnet import ResNetV2
+import transpath.net.models.configs as configs
+from transpath.net.models.modeling_resnet import ResNetV2
 
-from timm.models.layers import DropPath, to_2tuple, trunc_normal_
+from timm_transpath.models.layers import DropPath, to_2tuple, trunc_normal_
 logger = logging.getLogger(__name__)
 
 

@@ -1,7 +1,7 @@
 import torchvision
 import torch
 import os
-from net.models.modeling import VisionTransformer, CONFIGS
+from transpath.net.models.modeling import VisionTransformer, CONFIGS
 num_classes =1000
 arg = CONFIGS['R50-ViT-B_16']
 model = VisionTransformer(arg, 256, zero_head=True, num_classes=num_classes)

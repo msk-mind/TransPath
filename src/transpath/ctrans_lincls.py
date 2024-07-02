@@ -1,5 +1,5 @@
 import torch
-from ctran import ctranspath
+from transpath.ctran import ctranspath
 
 
 

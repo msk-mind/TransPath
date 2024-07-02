@@ -19,10 +19,10 @@ import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
-from datasets.dataset import train_tcga_byol
+from transpath.datasets.dataset import train_tcga_byol
 from timeit import default_timer as timer
 
-from byol_pytorch import BYOL
+from transpath.byol_pytorch import BYOL
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")

@@ -1,5 +1,5 @@
-from timm.models.layers.helpers import to_2tuple
-import timm
+from timm_ctranspath.models.layers.helpers import to_2tuple
+import timm_ctranspath
 import torch.nn as nn
 
 
@@ -44,5 +44,5 @@ class ConvStem(nn.Module):
         return x
 
 def ctranspath():
-    model = timm.create_model('swin_tiny_patch4_window7_224', embed_layer=ConvStem, pretrained=False)
+    model = timm_ctranspath.create_model('swin_tiny_patch4_window7_224', embed_layer=ConvStem, pretrained=False)
     return model
